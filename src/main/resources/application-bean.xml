@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+
+
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.stevejrong.bookmarks.professor.module"/>
+
+    <!-- 配置参数项。使用时，视实际情况修改directoryPathOfOriginalBookmarkFile和directoryPathOfNewBookmarkFile属性的值即可 -->
+    <bean id="systemConfig" class="com.stevejrong.bookmarks.professor.config.SystemConfig">
+        <property name="directoryPathOfOriginalBookmarkFile" value="C:\Users\SteveJrong\Desktop\bookmarks"/>
+        <property name="directoryPathOfNewBookmarkFile" value="C:\Users\SteveJrong\Desktop"/>
+    </bean>
+
+    <!-- 分析从浏览器导出的收藏夹文件 -->
+    <bean id="analysisHtmlFileFromBookmarkModule" class="com.stevejrong.bookmarks.professor.module.impl.AnalysisHtmlFileFromBookmarkModule" />
+
+    <!-- 去除收藏夹中的重复项 -->
+    <bean id="removeDuplicateBookmarksModule" class="com.stevejrong.bookmarks.professor.module.impl.RemoveDuplicateBookmarksModule" />
+
+    <!-- 去除收藏夹中的重复项 -->
+    <bean id="persistBookmarksModule" class="com.stevejrong.bookmarks.professor.module.impl.PersistBookmarksModule">
+        <property name="systemConfig" ref="systemConfig"/>
+    </bean>
+</beans>
